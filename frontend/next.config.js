@@ -55,7 +55,7 @@ const nextConfig = {
               style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com https://cdnjs.cloudflare.com https://unpkg.com;
               font-src 'self' data: https://cdnjs.cloudflare.com https://fonts.googleapis.com https://fonts.gstatic.com;
               connect-src ${connectSrc.join(" ")};
-              frame-src 'self' https://*.stripe.com https://hooks.stripe.com https://maps.googleapis.com https://m.stripe.network;
+              frame-src 'self' https://*.stripe.com https://hooks.stripe.com https://maps.googleapis.com https://m.stripe.network https://felt.com;
               worker-src 'self' blob:;
               child-src blob:;
               object-src 'none';

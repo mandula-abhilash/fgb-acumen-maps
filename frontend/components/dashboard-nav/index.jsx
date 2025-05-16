@@ -16,8 +16,6 @@ export function DashboardNav() {
   const { user, loading } = useAuth();
   const router = useRouter();
 
-  log.auth("Auth state:", { user: !!user, loading });
-
   useEffect(() => {
     if (!loading && !user) {
       log.auth("No authenticated user, redirecting to login");

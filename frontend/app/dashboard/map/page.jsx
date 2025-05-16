@@ -3,13 +3,21 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/visdak-auth/src/hooks/useAuth";
-import { Felt } from "@feltmaps/js-sdk";
 
+import { useFeltEmbed } from "@/lib/felt";
 import { Spinner } from "@/components/ui/spinner";
 
 export default function MapPage() {
   const { user, loading } = useAuth();
   const router = useRouter();
+
+  const { felt, mapRef } = useFeltEmbed("ZGqxKlVgR8eyiNfbVsYqxB", {
+    uiControls: {
+      cooperativeGestures: false,
+      fullScreenButton: false,
+      showLegend: false,
+    },
+  });
 
   useEffect(() => {
     if (!loading && !user) {
@@ -18,29 +26,29 @@ export default function MapPage() {
   }, [loading, user, router]);
 
   useEffect(() => {
-    async function loadFeltMap() {
-      const container = document.getElementById("felt-map-container");
-      if (!container) return;
+    if (felt) {
+      // Subscribe to layer changes
+      const unsubscribe = felt.onLayerChange({
+        handler: ({ layer }) => {
+          console.log("Layer changed:", layer);
+        },
+      });
 
-      try {
-        const map = await Felt.embed(container, "ZGqxKlVgR8eyiNfbVsYqxB", {
-          uiControls: {
-            cooperativeGestures: false,
-            fullScreenButton: false,
-            showLegend: false,
-          },
-        });
+      // Get initial layers
+      felt.getLayers().then((layers) => {
+        console.log("Initial layers:", layers);
+      });
 
-        console.log(map);
-        const layers = await map.getLayers();
-        console.log("Felt Layers:", layers);
-      } catch (err) {
-        console.error("Failed to load Felt map:", err);
-      }
+      // Get viewport information
+      felt.getViewport().then((viewport) => {
+        console.log("Current viewport:", viewport);
+      });
+
+      return () => {
+        unsubscribe();
+      };
     }
-
-    loadFeltMap();
-  }, []);
+  }, [felt]);
 
   if (loading) {
     return (
@@ -55,10 +63,13 @@ export default function MapPage() {
   return (
     <div className="h-full p-6">
       <div className="h-[calc(100vh-10rem)] bg-muted rounded-lg overflow-hidden relative">
-        <div
-          id="felt-map-container"
-          className="absolute inset-0 rounded-lg"
-        ></div>
+        <div ref={mapRef} className="absolute inset-0 rounded-lg">
+          {!felt && (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <Spinner size="lg" className="text-web-orange" />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

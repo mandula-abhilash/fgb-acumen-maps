@@ -27,17 +27,8 @@ export default function MapPage() {
 
   useEffect(() => {
     if (felt) {
-      // Subscribe to layer changes
-      const unsubscribe = felt.onLayerChange({
-        handler: ({ layer }) => {
-          console.log("Layer changed:", layer);
-        },
-      });
-
-      // Get initial layers
-      felt.getLayers().then((layers) => {
-        console.log("Initial layers:", layers);
-      });
+      // Make Felt instance globally available for the sidebar
+      window.felt = felt;
 
       // Get viewport information
       felt.getViewport().then((viewport) => {
@@ -45,7 +36,7 @@ export default function MapPage() {
       });
 
       return () => {
-        unsubscribe();
+        delete window.felt;
       };
     }
   }, [felt]);
@@ -61,8 +52,8 @@ export default function MapPage() {
   if (!user) return null;
 
   return (
-    <div className="h-full p-6">
-      <div className="h-[calc(100vh-10rem)] bg-muted rounded-lg overflow-hidden relative">
+    <div className="h-full">
+      <div className="h-full bg-muted overflow-hidden relative">
         <div ref={mapRef} className="absolute inset-0 rounded-lg">
           {!felt && (
             <div className="absolute inset-0 flex items-center justify-center">

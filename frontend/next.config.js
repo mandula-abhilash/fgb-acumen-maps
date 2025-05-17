@@ -34,6 +34,8 @@ const nextConfig = {
       "https://reports.fgbacumen.com",
       "https://planning-applications-bucket.s3.eu-west-2.amazonaws.com",
       "https://*.s3.*.amazonaws.com",
+      "https://felt.com",
+      "https://*.felt.com",
       "ws://localhost:*",
       "wss://localhost:*",
     ];
@@ -51,11 +53,11 @@ const nextConfig = {
             value: `
               default-src 'self' wss://*.fgbacumen.com https://api.ipify.org;
               img-src 'self' data: blob: https://*.googleapis.com https://*.gstatic.com https://images.pexels.com https://*.os.uk https://placehold.in https://*.s3.*.amazonaws.com https://planning-applications-bucket.s3.eu-west-2.amazonaws.com;
-              script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.stripe.com https://m.stripe.network https://cdnjs.cloudflare.com https://unpkg.com https://maps.googleapis.com;
+              script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.stripe.com https://m.stripe.network https://cdnjs.cloudflare.com https://unpkg.com https://maps.googleapis.com https://cdn.felt.com https://*.felt.com;
               style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com https://cdnjs.cloudflare.com https://unpkg.com;
               font-src 'self' data: https://cdnjs.cloudflare.com https://fonts.googleapis.com https://fonts.gstatic.com;
               connect-src ${connectSrc.join(" ")};
-              frame-src 'self' https://*.stripe.com https://hooks.stripe.com https://maps.googleapis.com https://m.stripe.network https://felt.com;
+              frame-src 'self' https://*.stripe.com https://hooks.stripe.com https://maps.googleapis.com https://m.stripe.network https://felt.com https://*.felt.com;
               worker-src 'self' blob:;
               child-src blob:;
               object-src 'none';

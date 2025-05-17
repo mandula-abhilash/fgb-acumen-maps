@@ -1,5 +1,6 @@
 "use client";
 
+import { FeltProvider } from "@/contexts/felt-context";
 import { FiltersProvider } from "@/contexts/filters-context";
 import { GoogleMapsProvider } from "@/contexts/google-maps-context";
 
@@ -10,12 +11,23 @@ export default function DashboardLayout({ children }) {
   return (
     <FiltersProvider>
       <GoogleMapsProvider>
-        <MainLayout>
-          <div className="h-[calc(100vh-3.5rem)] flex">
-            <DashboardNav />
-            <main className="flex-1 overflow-y-auto">{children}</main>
-          </div>
-        </MainLayout>
+        <FeltProvider
+          mapId="ZGqxKlVgR8eyiNfbVsYqxB"
+          options={{
+            uiControls: {
+              cooperativeGestures: false,
+              fullScreenButton: false,
+              showLegend: false,
+            },
+          }}
+        >
+          <MainLayout>
+            <div className="h-[calc(100vh-3.5rem)] flex">
+              <DashboardNav />
+              <main className="flex-1 overflow-y-auto">{children}</main>
+            </div>
+          </MainLayout>
+        </FeltProvider>
       </GoogleMapsProvider>
     </FiltersProvider>
   );

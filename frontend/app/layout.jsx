@@ -98,6 +98,11 @@ export default function RootLayout({ children }) {
           href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap"
           rel="stylesheet"
         />
+        <script
+          async
+          src="https://cdn.felt.com/embed-v1.js"
+          type="text/javascript"
+        ></script>
       </head>
       <body>
         <ThemeProvider
